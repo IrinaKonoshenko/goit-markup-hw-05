@@ -11,7 +11,7 @@
   --header-border: #ececec;
   --project-border-color: #eeeeee;
   --icon-color: #afb1b8;
-} 
+}
 * {
   box-sizing: border-box;
 }
@@ -72,13 +72,22 @@ body {
   text-decoration: none;
   padding: 32px 0;
   display: block;
-  border-bottom: 4px solid transparent;
-  transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1), color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
 }
-.current,
-.menu-link:hover, 
-.menu-link:focus{
-  border-color: var(--accent-color);
+.menu-link::after {
+  content: "";
+  position: absolute;
+  height: 4px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.current::after,
+.menu-link:hover::after,
+.menu-link:focus::after {
+  background-color: var(--accent-color);
 }
 .menu-link:hover,
 .header-link:hover,
@@ -102,7 +111,8 @@ body {
   padding: 32px 0;
   display: flex;
   align-items: center;
-  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1), fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .header-contact {
   flex-grow: 1;
@@ -113,7 +123,7 @@ body {
   margin: 0;
   padding: 0;
 }
-.header-contact-item{
+.header-contact-item {
   color: var(--gray-color);
 }
 .header-contact-item:not(:first-child) {
@@ -176,13 +186,47 @@ body {
 .project-link {
   text-decoration: none;
   display: block;
+  transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .project-link:hover,
-.project-link:focus{
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06), 1px 4px 6px rgba(0, 0, 0, 0.16);
+.project-link:focus {
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
+    1px 4px 6px rgba(0, 0, 0, 0.16);
+}
+.project-link:hover .project-text {
+  bottom: 0;
 }
 .project-item img {
   display: block;
+}
+.project-box {
+  position: relative;
+  overflow: hidden;
+}
+.project-text {
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0.03em;
+  color: var(--white-color);
+  margin: 0;
+  padding: 63px 24px;
+  position: absolute;
+  bottom: -100%;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  transition: bottom 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.project-text:after {
+  position: absolute;
+  background-color: var(--accent-color);
+  content: "";
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.9;
 }
 .project-content {
   padding: 20px 23px;
@@ -337,7 +381,7 @@ body {
   margin: 0 15px;
   position: relative;
 }
-.box{
+.box {
   background: rgba(47, 48, 58, 0.8);
   padding: 27px 10px;
   position: absolute;
@@ -345,7 +389,7 @@ body {
   right: 0;
   left: 0;
 }
-.box-text{
+.box-text {
   line-height: 16px;
   text-align: center;
   letter-spacing: 0.03em;
@@ -375,10 +419,10 @@ body {
 .social-list-item {
   margin: 0 5px;
 }
-.social-list-item:first-child{
+.social-list-item:first-child {
   margin-left: 0;
 }
-.social-list-item:last-child{
+.social-list-item:last-child {
   margin-right: 0;
 }
 .social-list-link {
@@ -389,7 +433,8 @@ body {
   height: 44px;
   border-radius: 50%;
   fill: var(--icon-color);
-  transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1), background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .social-list-link:hover,
 .social-list-link:focus {
@@ -448,12 +493,13 @@ body {
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: center;    
+  justify-content: center;
   align-items: center;
   border: 1px solid var(--icon-color);
   border-radius: 4px;
   fill: var(--icon-color);
-  transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1), border-color  250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .client-list:hover,
 .client-list:focus {
@@ -504,4 +550,47 @@ body {
 .social-icon-link:hover,
 .social-icon-link:focus {
   background-color: var(--accent-color);
+}
+
+.backdrop {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.modal {
+  width: 516px;
+  height: 581px;
+  margin: 0 auto;
+  background-color: var(--white-color);
+  position: relative;
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.backdrop.is-hidden .modal {
+  transform: translateY(300px) scale(0.9);
+  opacity: 0;
+}
+
+.modal-close {
+  position: absolute;
+  right: -4px;
+  top: 6px;
+  width: 30px;
+  height: 30px;
+  background-color: var(--white-color);
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.is-hidden {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
 }
